@@ -806,7 +806,168 @@ function hitungPortfolio(){
     });
 
     }
+function renderTransaksi(){
 
+    const periode =
+        Number(
+            document.getElementById(
+                'periodeFilter'
+            ).value
+        );
+
+    const selectedWallets =
+        [...document
+            .querySelectorAll(
+                '.walletCheck:checked'
+            )]
+        .map(x => x.value);
+
+    const batasTanggal =
+        new Date();
+
+    batasTanggal.setDate(
+        batasTanggal.getDate()
+        - periode
+    );
+
+    const data =
+        transaksiData.filter(item => {
+
+            const tanggal =
+                new Date(item.Tanggal);
+
+            return (
+                tanggal >= batasTanggal &&
+                selectedWallets.includes(
+                    item.Wallet
+                )
+            );
+
+        });
+
+    let totalMasuk = 0;
+    let totalKeluar = 0;
+    let totalAirdrop = 0;
+    let totalCashout = 0;
+
+    const tbody =
+        document.querySelector(
+            '#transaksiTable tbody'
+        );
+
+    tbody.innerHTML = '';
+
+    data
+    .sort(
+        (a,b)=>
+        new Date(b.Tanggal)
+        -
+        new Date(a.Tanggal)
+    )
+    .forEach(item => {
+
+        const amount =
+            Number(item.Amount || 0);
+
+        const asset =
+            item.Asset;
+
+        const harga =
+            prices[asset] || 0;
+
+        const nilaiUSD =
+            amount * harga;
+
+        if(
+            item.Jenis === 'Masuk' &&
+            VALID_ASSETS.includes(asset)
+        ){
+
+            totalMasuk += nilaiUSD;
+
+        }
+
+        if(
+            item.Jenis === 'Keluar' &&
+            VALID_ASSETS.includes(asset)
+        ){
+
+            totalKeluar += nilaiUSD;
+
+        }
+
+        if(
+            item.Keterangan
+            .toLowerCase()
+            .includes('airdrop')
+        ){
+
+            totalAirdrop += amount;
+
+        }
+
+        if(
+            item.Keterangan
+            .toLowerCase()
+            .includes('sell')
+            ||
+            item.Keterangan
+            .toLowerCase()
+            .includes('p2p')
+        ){
+
+            totalCashout += nilaiUSD;
+
+        }
+
+        tbody.innerHTML += `
+        <tr>
+
+            <td>${item.Tanggal}</td>
+
+            <td>${item.Wallet}</td>
+
+            <td class="${
+                item.Jenis === 'Masuk'
+                ? 'masuk'
+                : 'keluar'
+            }">
+                ${item.Jenis}
+            </td>
+
+            <td>${item.Asset}</td>
+
+            <td>${item.Amount}</td>
+
+            <td>${item.Keterangan}</td>
+
+        </tr>
+        `;
+
+    });
+
+    document.getElementById(
+        'totalMasuk'
+    ).innerText =
+    usd(totalMasuk);
+
+    document.getElementById(
+        'totalKeluar'
+    ).innerText =
+    usd(totalKeluar);
+
+    document.getElementById(
+        'totalCashout'
+    ).innerText =
+    usd(totalCashout);
+
+    document.getElementById(
+        'totalAirdrop'
+    ).innerText =
+    totalAirdrop;
+
+        }
+    
 loadData();
 
 </script>
