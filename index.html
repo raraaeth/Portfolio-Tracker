@@ -217,26 +217,41 @@ tr:hover{
 
 <div class="filters">
 
-<div id="walletFilterContainer"
-style="
-background:#1e293b;
-padding:10px;
-border-radius:10px;
-max-width:350px;
-">
+<details id="walletFilterContainer">
 
-<strong>Pilih Wallet</strong>
+<summary
+style="
+cursor:pointer;
+padding:10px 15px;
+background:#1e293b;
+border-radius:10px;
+font-weight:bold;
+list-style:none;
+">
+🏦 Pilih Wallet
+</summary>
+
+<div
+style="
+margin-top:10px;
+padding:12px;
+background:#1e293b;
+border-radius:10px;
+min-width:320px;
+">
 
 <div id="walletChecklist"
 style="
-margin-top:10px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:6px;
+grid-template-columns:
+repeat(auto-fit,minmax(140px,1fr));
+gap:8px;
 ">
 </div>
 
 </div>
+
+</details>
 
 <select id="periodeFilter">
 
