@@ -604,15 +604,20 @@ function getSaldoAktual(){
         const amount =
             Number(item.Amount || 0);
 
-        if(item.Jenis === 'Masuk'){
+        const jenis =
+    (item.Jenis || '')
+    .trim()
+    .toLowerCase();
 
-            saldo[key] += amount;
+if(jenis === 'masuk'){
 
-        }else if(item.Jenis === 'Keluar'){
+    saldo[key] += amount;
 
-            saldo[key] -= amount;
+}else if(jenis === 'keluar'){
 
-        }
+    saldo[key] -= amount;
+
+    }
 
     });
 
