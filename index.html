@@ -217,11 +217,26 @@ tr:hover{
 
 <div class="filters">
 
-<select id="walletFilter">
-    <option value="">
-        Semua Wallet
-    </option>
-</select>
+<div id="walletFilterContainer"
+style="
+background:#1e293b;
+padding:10px;
+border-radius:10px;
+max-width:350px;
+">
+
+<strong>Pilih Wallet</strong>
+
+<div id="walletChecklist"
+style="
+margin-top:10px;
+display:flex;
+flex-direction:column;
+gap:5px;
+">
+</div>
+
+</div>
 
 <select id="periodeFilter">
 
@@ -368,6 +383,55 @@ let prices = {};
 
 let walletChart = null;
 let assetChart = null;
+    function isiWalletChecklist(){
+
+    const container =
+        document.getElementById(
+            'walletChecklist'
+        );
+
+    const wallets =
+        [...new Set(
+            portfolioData.map(
+                x => x.Wallet
+            )
+        )].sort();
+
+    container.innerHTML = '';
+
+    wallets.forEach(wallet => {
+
+        container.innerHTML += `
+        <label>
+            <input
+                type="checkbox"
+                class="walletCheck"
+                value="${wallet}"
+                checked
+            >
+            ${wallet}
+        </label>
+        `;
+
+    });
+
+    document
+    .querySelectorAll('.walletCheck')
+    .forEach(cb => {
+
+        cb.addEventListener(
+            'change',
+            () => {
+
+                hitungPortfolio();
+                renderCharts();
+
+            }
+        );
+
+    });
+
+    }
 
 function usd(n){
 
@@ -400,7 +464,9 @@ async function loadData(){
         transaksiData =
         await transaksiRes.json();
 
-        await loadPrices();
+        isiWalletChecklist();
+
+await loadPrices();
 
     }catch(err){
 
@@ -470,8 +536,22 @@ async function loadPrices(){
 function hitungPortfolio(){
 
     let totalPortfolio = 0;
+    const selectedWallets =
+    [...document
+        .querySelectorAll(
+            '.walletCheck:checked'
+        )]
+    .map(x => x.value);
 
     portfolioData.forEach(item => {
+
+    if(
+        !selectedWallets.includes(
+            item.Wallet
+        )
+    ){
+        return;
+    }
 
         const asset =
             item.Asset;
@@ -501,8 +581,22 @@ function hitungPortfolio(){
 
     const walletData = {};
     const assetData = {};
+        const selectedWallets =
+    [...document
+        .querySelectorAll(
+            '.walletCheck:checked'
+        )]
+    .map(x => x.value);
 
     portfolioData.forEach(item => {
+
+    if(
+        !selectedWallets.includes(
+            item.Wallet
+        )
+    ){
+        return;
+    }
 
         const asset =
             item.Asset;
@@ -562,7 +656,48 @@ function hitungPortfolio(){
         },
 
         options:{
-            responsive:true,
+    responsive:true,
+
+    plugins:{
+
+        tooltip:{
+
+            callbacks:{
+
+                label:function(context){
+
+                    const total =
+                        context.dataset.data
+                        .reduce(
+                            (a,b)=>a+b,
+                            0
+                        );
+
+                    const value =
+                        context.raw;
+
+                    const percent =
+                        (
+                            value /
+                            total *
+                            100
+                        ).toFixed(1);
+
+                    return (
+                        '$' +
+                        value.toFixed(2) +
+                        ' (' +
+                        percent +
+                        '%)'
+                    );
+
+                }
+
+            }
+
+        },
+
+        legend:{
             plugins:{
                 legend:{
                     position:'bottom',
@@ -604,7 +739,48 @@ function hitungPortfolio(){
         },
 
         options:{
-            responsive:true,
+    responsive:true,
+
+    plugins:{
+
+        tooltip:{
+
+            callbacks:{
+
+                label:function(context){
+
+                    const total =
+                        context.dataset.data
+                        .reduce(
+                            (a,b)=>a+b,
+                            0
+                        );
+
+                    const value =
+                        context.raw;
+
+                    const percent =
+                        (
+                            value /
+                            total *
+                            100
+                        ).toFixed(1);
+
+                    return (
+                        '$' +
+                        value.toFixed(2) +
+                        ' (' +
+                        percent +
+                        '%)'
+                    );
+
+                }
+
+            }
+
+        },
+
+        legend:{
             plugins:{
                 legend:{
                     position:'bottom',
