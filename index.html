@@ -560,50 +560,93 @@ renderTransaksi();
 
 }
 
-function hitungPortfolio(){
+function getSaldoAktual(){
 
-    let totalPortfolio = 0;
-    const selectedWallets =
-    [...document
-        .querySelectorAll(
-            '.walletCheck:checked'
-        )]
-    .map(x => x.value);
+    const saldo = {};
+
+    // SALDO AWAL
 
     portfolioData.forEach(item => {
 
-    if(
-        !selectedWallets.includes(
-            item.Wallet
-        )
-    ){
-        return;
-    }
+        const key =
+            item.Wallet +
+            '|' +
+            item.Asset;
+
+        saldo[key] =
+            Number(item.Amount || 0);
+
+    });
+
+    // MUTASI TRANSAKSI
+
+    transaksiData.forEach(item => {
 
         const asset =
             item.Asset;
+
+        if(
+            !VALID_ASSETS.includes(asset)
+        ){
+            return;
+        }
+
+        const key =
+            item.Wallet +
+            '|' +
+            asset;
+
+        if(!saldo[key]){
+
+            saldo[key] = 0;
+
+        }
 
         const amount =
             Number(item.Amount || 0);
 
         if(
-            VALID_ASSETS.includes(asset)
+            item.Jenis === 'Masuk'
         ){
 
-            totalPortfolio +=
-            amount *
-            prices[asset];
+            saldo[key] += amount;
+
+        }else{
+
+            saldo[key] -= amount;
 
         }
 
     });
 
-    document.getElementById(
-        'totalPortfolio'
-    ).innerText =
-    usd(totalPortfolio);
+    return saldo;
 
 }
+const saldo =
+    getSaldoAktual();
+
+Object.entries(saldo)
+.forEach(([key,amount]) => {
+
+    const [
+        wallet,
+        asset
+    ] = key.split('|');
+
+    if(
+        !selectedWallets.includes(
+            wallet
+        )
+    ){
+        return;
+    }
+
+    totalPortfolio +=
+        amount *
+        prices[asset];
+
+});
+    
     function renderCharts(){
 
     const walletData = {};
