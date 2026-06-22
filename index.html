@@ -440,11 +440,21 @@ let assetChart = null;
 
                 hitungPortfolio();
                 renderCharts();
+                renderTransaksi();
 
             }
         );
 
     });
+
+        document
+.getElementById(
+    'periodeFilter'
+)
+.addEventListener(
+    'change',
+    renderTransaksi
+);
 
     }
 
@@ -545,6 +555,8 @@ async function loadPrices(){
     hitungPortfolio();
 
     renderCharts();
+
+renderTransaksi();
 
 }
 
