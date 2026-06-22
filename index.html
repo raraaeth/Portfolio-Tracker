@@ -463,6 +463,8 @@ async function loadPrices(){
 
     hitungPortfolio();
 
+    renderCharts();
+
 }
 
 function hitungPortfolio(){
@@ -495,6 +497,127 @@ function hitungPortfolio(){
     usd(totalPortfolio);
 
 }
+    function renderCharts(){
+
+    const walletData = {};
+    const assetData = {};
+
+    portfolioData.forEach(item => {
+
+        const asset =
+            item.Asset;
+
+        const amount =
+            Number(item.Amount || 0);
+
+        if(
+            !VALID_ASSETS.includes(asset)
+        ){
+            return;
+        }
+
+        const value =
+            amount *
+            prices[asset];
+
+        const wallet =
+            item.Wallet;
+
+        walletData[wallet] =
+            (walletData[wallet] || 0)
+            + value;
+
+        assetData[asset] =
+            (assetData[asset] || 0)
+            + value;
+
+    });
+
+    const walletCtx =
+        document.getElementById(
+            'walletChart'
+        );
+
+    if(walletChart){
+
+        walletChart.destroy();
+
+    }
+
+    walletChart =
+    new Chart(walletCtx, {
+
+        type:'pie',
+
+        data:{
+            labels:
+                Object.keys(walletData),
+
+            datasets:[{
+                data:
+                    Object.values(
+                        walletData
+                    )
+            }]
+        },
+
+        options:{
+            responsive:true,
+            plugins:{
+                legend:{
+                    position:'bottom',
+                    labels:{
+                        color:'white'
+                    }
+                }
+            }
+        }
+
+    });
+
+    const assetCtx =
+        document.getElementById(
+            'assetChart'
+        );
+
+    if(assetChart){
+
+        assetChart.destroy();
+
+    }
+
+    assetChart =
+    new Chart(assetCtx, {
+
+        type:'pie',
+
+        data:{
+            labels:
+                Object.keys(assetData),
+
+            datasets:[{
+                data:
+                    Object.values(
+                        assetData
+                    )
+            }]
+        },
+
+        options:{
+            responsive:true,
+            plugins:{
+                legend:{
+                    position:'bottom',
+                    labels:{
+                        color:'white'
+                    }
+                }
+            }
+        }
+
+    });
+
+    }
 
 loadData();
 
