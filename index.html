@@ -560,11 +560,12 @@ renderTransaksi();
 
 }
 
+
 function getSaldoAktual(){
 
     const saldo = {};
 
-    // SALDO AWAL
+    // Saldo awal dari sheet portofolio
 
     portfolioData.forEach(item => {
 
@@ -578,7 +579,7 @@ function getSaldoAktual(){
 
     });
 
-    // MUTASI TRANSAKSI
+    // Mutasi dari sheet transaksi
 
     transaksiData.forEach(item => {
 
@@ -597,21 +598,17 @@ function getSaldoAktual(){
             asset;
 
         if(!saldo[key]){
-
             saldo[key] = 0;
-
         }
 
         const amount =
             Number(item.Amount || 0);
 
-        if(
-            item.Jenis === 'Masuk'
-        ){
+        if(item.Jenis === 'Masuk'){
 
             saldo[key] += amount;
 
-        }else{
+        }else if(item.Jenis === 'Keluar'){
 
             saldo[key] -= amount;
 
@@ -622,70 +619,83 @@ function getSaldoAktual(){
     return saldo;
 
 }
-const saldo =
-    getSaldoAktual();
-
-Object.entries(saldo)
-.forEach(([key,amount]) => {
-
-    const [
-        wallet,
-        asset
-    ] = key.split('|');
-
-    if(
-        !selectedWallets.includes(
-            wallet
-        )
-    ){
-        return;
-    }
-
-    totalPortfolio +=
-        amount *
-        prices[asset];
-
-});
     
-    function renderCharts(){
+    function hitungPortfolio(){
 
-    const walletData = {};
-    const assetData = {};
-        const selectedWallets =
+    let totalPortfolio = 0;
+
+    const selectedWallets =
     [...document
         .querySelectorAll(
             '.walletCheck:checked'
         )]
     .map(x => x.value);
 
-    portfolioData.forEach(item => {
+    const saldo =
+        getSaldoAktual();
 
-    if(
-        !selectedWallets.includes(
-            item.Wallet
-        )
-    ){
-        return;
-    }
+    Object.entries(saldo)
+    .forEach(([key,amount]) => {
 
-        const asset =
-            item.Asset;
-
-        const amount =
-            Number(item.Amount || 0);
+        const [
+            wallet,
+            asset
+        ] = key.split('|');
 
         if(
-            !VALID_ASSETS.includes(asset)
+            !selectedWallets.includes(
+                wallet
+            )
+        ){
+            return;
+        }
+
+        totalPortfolio +=
+            amount *
+            (prices[asset] || 0);
+
+    });
+
+    document.getElementById(
+        'totalPortfolio'
+    ).innerText =
+    usd(totalPortfolio);
+
+}
+    function renderCharts(){
+
+    const walletData = {};
+    const assetData = {};
+
+    const selectedWallets =
+    [...document
+        .querySelectorAll(
+            '.walletCheck:checked'
+        )]
+    .map(x => x.value);
+
+    const saldo =
+        getSaldoAktual();
+
+    Object.entries(saldo)
+    .forEach(([key,amount]) => {
+
+        const [
+            wallet,
+            asset
+        ] = key.split('|');
+
+        if(
+            !selectedWallets.includes(
+                wallet
+            )
         ){
             return;
         }
 
         const value =
             amount *
-            prices[asset];
-
-        const wallet =
-            item.Wallet;
+            (prices[asset] || 0);
 
         walletData[wallet] =
             (walletData[wallet] || 0)
@@ -697,15 +707,15 @@ Object.entries(saldo)
 
     });
 
+    // WALLET CHART
+
     const walletCtx =
         document.getElementById(
             'walletChart'
         );
 
     if(walletChart){
-
         walletChart.destroy();
-
     }
 
     walletChart =
@@ -714,59 +724,15 @@ Object.entries(saldo)
         type:'pie',
 
         data:{
-            labels:
-                Object.keys(walletData),
-
+            labels:Object.keys(walletData),
             datasets:[{
-                data:
-                    Object.values(
-                        walletData
-                    )
+                data:Object.values(walletData)
             }]
         },
 
         options:{
-    responsive:true,
-
-    plugins:{
-
-        tooltip:{
-
-            callbacks:{
-
-                label:function(context){
-
-                    const total =
-                        context.dataset.data
-                        .reduce(
-                            (a,b)=>a+b,
-                            0
-                        );
-
-                    const value =
-                        context.raw;
-
-                    const percent =
-                        (
-                            value /
-                            total *
-                            100
-                        ).toFixed(1);
-
-                    return (
-                        '$' +
-                        value.toFixed(2) +
-                        ' (' +
-                        percent +
-                        '%)'
-                    );
-
-                }
-
-            }
-
-        },
-
+            responsive:true,
+            plugins:{
                 legend:{
                     position:'bottom',
                     labels:{
@@ -778,15 +744,15 @@ Object.entries(saldo)
 
     });
 
+    // ASSET CHART
+
     const assetCtx =
         document.getElementById(
             'assetChart'
         );
 
     if(assetChart){
-
         assetChart.destroy();
-
     }
 
     assetChart =
@@ -795,60 +761,15 @@ Object.entries(saldo)
         type:'pie',
 
         data:{
-            labels:
-                Object.keys(assetData),
-
+            labels:Object.keys(assetData),
             datasets:[{
-                data:
-                    Object.values(
-                        assetData
-                    )
+                data:Object.values(assetData)
             }]
         },
 
         options:{
-    responsive:true,
-
-    plugins:{
-
-        tooltip:{
-
-            callbacks:{
-
-                label:function(context){
-
-                    const total =
-                        context.dataset.data
-                        .reduce(
-                            (a,b)=>a+b,
-                            0
-                        );
-
-                    const value =
-                        context.raw;
-
-                    const percent =
-                        (
-                            value /
-                            total *
-                            100
-                        ).toFixed(1);
-
-                    return (
-                        '$' +
-                        value.toFixed(2) +
-                        ' (' +
-                        percent +
-                        '%)'
-                    );
-
-                }
-
-            }
-
-        },
-
-    
+            responsive:true,
+            plugins:{
                 legend:{
                     position:'bottom',
                     labels:{
@@ -861,6 +782,8 @@ Object.entries(saldo)
     });
 
     }
+                   
+    
 function renderTransaksi(){
 
     const periode =
