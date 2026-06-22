@@ -345,6 +345,158 @@ tr:hover{
 </div>
 
 <!-- JAVASCRIPT AKAN DITAMBAHKAN DI SINI -->
+<script>
 
+const PORTOFOLIO_URL =
+'https://opensheet.elk.sh/1Wnje_mKu73eJyq0a8QlYETunfCCf2ntSKerV5J8qT30/portofolio';
+
+const TRANSAKSI_URL =
+'https://opensheet.elk.sh/1Wnje_mKu73eJyq0a8QlYETunfCCf2ntSKerV5J8qT30/transaksi';
+
+const VALID_ASSETS = [
+    'USDT',
+    'BNB',
+    'ETH',
+    'SOL'
+];
+
+let portfolioData = [];
+let transaksiData = [];
+let prices = {};
+
+let walletChart = null;
+let assetChart = null;
+
+function usd(n){
+
+    return '$' +
+    Number(n).toLocaleString(
+        'en-US',
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+async function loadData(){
+
+    try{
+
+        const [portfolioRes, transaksiRes] =
+        await Promise.all([
+
+            fetch(PORTOFOLIO_URL),
+            fetch(TRANSAKSI_URL)
+
+        ]);
+
+        portfolioData =
+        await portfolioRes.json();
+
+        transaksiData =
+        await transaksiRes.json();
+
+        await loadPrices();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(
+            'Gagal mengambil data spreadsheet'
+        );
+
+    }
+
+}
+
+async function loadPrices(){
+
+    const url =
+    'https://api.coingecko.com/api/v3/simple/price?ids=tether,binancecoin,ethereum,solana&vs_currencies=usd';
+
+    const res =
+    await fetch(url);
+
+    const data =
+    await res.json();
+
+    prices = {
+
+        USDT:
+        data.tether.usd,
+
+        BNB:
+        data.binancecoin.usd,
+
+        ETH:
+        data.ethereum.usd,
+
+        SOL:
+        data.solana.usd
+
+    };
+
+    document.getElementById(
+        'priceUSDT'
+    ).innerText =
+    usd(prices.USDT);
+
+    document.getElementById(
+        'priceBNB'
+    ).innerText =
+    usd(prices.BNB);
+
+    document.getElementById(
+        'priceETH'
+    ).innerText =
+    usd(prices.ETH);
+
+    document.getElementById(
+        'priceSOL'
+    ).innerText =
+    usd(prices.SOL);
+
+    hitungPortfolio();
+
+}
+
+function hitungPortfolio(){
+
+    let totalPortfolio = 0;
+
+    portfolioData.forEach(item => {
+
+        const asset =
+            item.Asset;
+
+        const amount =
+            Number(item.Amount || 0);
+
+        if(
+            VALID_ASSETS.includes(asset)
+        ){
+
+            totalPortfolio +=
+            amount *
+            prices[asset];
+
+        }
+
+    });
+
+    document.getElementById(
+        'totalPortfolio'
+    ).innerText =
+    usd(totalPortfolio);
+
+}
+
+loadData();
+
+</script>
+    
 </body>
 </html>
