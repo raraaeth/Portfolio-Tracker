@@ -177,7 +177,32 @@ function renderActivities(){
 
     tbody.innerHTML = "";
 
+    const days =
+    Number(
+        document.getElementById(
+            "periodFilter"
+        ).value
+    );
+
+    const today =
+    new Date();
+
+    const limitDate =
+    new Date();
+
+    limitDate.setDate(
+        today.getDate() - days
+    );
+
     transaksi
+    .filter(item => {
+
+        const txDate =
+        new Date(item.Tanggal);
+
+        return txDate >= limitDate;
+
+    })
     .slice()
     .reverse()
     .forEach(item => {
@@ -206,6 +231,7 @@ function renderActivities(){
     });
 
 }
+
 /* =========================
    WALLET ALLOCATION
 ========================= */
@@ -354,6 +380,18 @@ async function testData(){
 
 }
 
+/* =========================
+   FILTER EVENTS
+========================= */
+
+document
+.getElementById(
+    "periodFilter"
+)
+.addEventListener(
+    "change",
+    renderActivities
+);
 
 /* =========================
    INIT
