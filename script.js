@@ -183,6 +183,17 @@ function renderActivities(){
             "periodFilter"
         ).value
     );
+   const selectedWallets =
+[
+    ...document
+    .getElementById(
+        "walletFilter"
+    )
+    .selectedOptions
+]
+.map(
+    option => option.value
+);
 
     const today =
     new Date();
@@ -200,7 +211,18 @@ function renderActivities(){
         const txDate =
         new Date(item.Tanggal);
 
-        return txDate >= limitDate;
+        const walletMatch =
+
+selectedWallets.length === 0
+? true
+: selectedWallets.includes(
+    item.Wallet
+);
+
+return (
+    txDate >= limitDate &&
+    walletMatch
+);
 
     })
     .slice()
@@ -381,12 +403,61 @@ async function testData(){
 }
 
 /* =========================
+   WALLET FILTER
+========================= */
+
+function populateWalletFilter(){
+
+    const walletFilter =
+    document.getElementById(
+        "walletFilter"
+    );
+
+    walletFilter.innerHTML = "";
+
+    const wallets = [
+        ...new Set(
+            transaksi.map(
+                item => item.Wallet
+            )
+        )
+    ];
+
+    wallets.forEach(wallet => {
+
+        const option =
+        document.createElement(
+            "option"
+        );
+
+        option.value = wallet;
+
+        option.textContent =
+        wallet;
+
+        walletFilter.appendChild(
+            option
+        );
+
+    });
+
+}
+
+/* =========================
    FILTER EVENTS
 ========================= */
 
 document
 .getElementById(
     "periodFilter"
+)
+.addEventListener(
+    "change",
+    renderActivities
+);
+document
+.getElementById(
+    "walletFilter"
 )
 .addEventListener(
     "change",
@@ -405,6 +476,7 @@ async function init(){
 
     calculatePortfolio();
     calculateAirdrop();
+    populateWalletFilter();
     renderActivities();
     renderWalletAllocation();
    
