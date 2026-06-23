@@ -1,0 +1,278 @@
+/* =========================
+GLOBAL
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:#ffffff;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+section{
+border-radius:20px;
+margin-bottom:20px;
+overflow:hidden;
+}
+
+/* =========================
+LIVE PRICE SECTION
+========================= */
+
+.live-price-card{
+background:#ffffff;
+color:#111827;
+
+display:grid;
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+padding:20px;
+
+}
+
+.price-item{
+text-align:center;
+}
+
+.price-item span{
+display:block;
+font-size:14px;
+color:#64748b;
+}
+
+.price-item strong{
+font-size:20px;
+}
+
+/* =========================
+HEADER SECTION
+========================= */
+
+.header-card{
+background:#111827;
+padding:25px;
+}
+
+.header-card h1{
+font-size:30px;
+margin-bottom:8px;
+}
+
+.header-card p{
+color:#94a3b8;
+}
+
+/* =========================
+PORTFOLIO & AIRDROP
+========================= */
+
+.portfolio-grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+}
+
+.portfolio-card{
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#1e293b
+);
+
+padding:25px;
+
+}
+
+.portfolio-card p{
+color:#94a3b8;
+}
+
+.portfolio-card h2{
+margin-top:12px;
+font-size:40px;
+}
+
+.airdrop-card{
+background:
+linear-gradient(
+135deg,
+#312e81,
+#4338ca
+);
+
+padding:25px;
+
+}
+
+.airdrop-card h2{
+margin-top:12px;
+font-size:40px;
+}
+
+/* =========================
+PNL SECTION
+========================= */
+
+.pnl-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.pnl-card{
+background:#1f2937;
+padding:20px;
+}
+
+.pnl-card p{
+color:#94a3b8;
+}
+
+.pnl-card h3{
+margin-top:10px;
+font-size:24px;
+}
+
+/* =========================
+WALLET ALLOCATION
+========================= */
+
+.wallet-card{
+background:#ffffff;
+color:#111827;
+padding:25px;
+}
+
+#walletChart{
+margin-top:20px;
+max-height:350px;
+}
+
+/* =========================
+ACTIVITIES SECTION
+========================= */
+
+.activities-card{
+background:#1e293b;
+padding:25px;
+}
+
+.activities-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.filters{
+display:flex;
+gap:10px;
+}
+
+select{
+padding:10px;
+border:none;
+border-radius:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#334155;
+}
+
+th,
+td{
+padding:12px;
+text-align:left;
+}
+
+tbody tr{
+border-bottom:1px solid #334155;
+}
+
+/* =========================
+BALANCE COMPARISON
+========================= */
+
+.comparison-card{
+background:
+linear-gradient(
+135deg,
+#312e81,
+#4338ca
+);
+
+padding:25px;
+
+}
+
+#balanceChart{
+margin-top:20px;
+}
+
+/* =========================
+STATUS COLOR
+========================= */
+
+.masuk{
+color:#22c55e;
+font-weight:bold;
+}
+
+.keluar{
+color:#ef4444;
+font-weight:bold;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+.live-price-card{
+    grid-template-columns:1fr 1fr;
+}
+
+.portfolio-grid{
+    grid-template-columns:1fr;
+}
+
+.pnl-grid{
+    grid-template-columns:1fr;
+}
+
+.activities-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.filters{
+    width:100%;
+    flex-direction:column;
+}
+
+table{
+    display:block;
+    overflow-x:auto;
+}
+
+}
