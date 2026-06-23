@@ -207,6 +207,14 @@ tbody tr{
 border-bottom:1px solid #334155;
 }
 
+.activities-card table{
+    font-size:14px;
+}
+
+.activities-card td{
+    white-space:nowrap;
+}
+
 /* =========================
 BALANCE COMPARISON
 ========================= */
