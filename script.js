@@ -2,6 +2,13 @@
    CONFIG
 ========================= */
 /* =========================
+   GLOBAL DATA
+========================= */
+
+let transaksi = [];
+let prices = {};
+
+/* =========================
    COINGECKO
 ========================= */
 
@@ -12,7 +19,7 @@ async function getPrices(){
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana&vs_currencies=usd"
     );
 
-    const prices =
+    prices =
     await response.json();
 
     document.getElementById("btcPrice")
@@ -46,6 +53,88 @@ const SHEET_NAME =
 const API_URL =
 `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
 
+/* =========================
+   PORTFOLIO CALCULATOR
+========================= */
+
+function calculatePortfolio(){
+
+    let balances = {
+
+        BTC:0,
+        ETH:0,
+        BNB:0,
+        SOL:0,
+        USDT:0,
+        USDC:0
+
+    };
+
+    transaksi.forEach(item => {
+
+        const asset =
+        item.Asset.toUpperCase();
+
+        const amount =
+        parseFloat(item.Amount) || 0;
+
+        if(
+            !balances.hasOwnProperty(asset)
+        ){
+            return;
+        }
+
+        if(item.Jenis === "Masuk"){
+
+            balances[asset] += amount;
+
+        }
+
+        if(item.Jenis === "Keluar"){
+
+            balances[asset] -= amount;
+
+        }
+
+    });
+
+    let totalPortfolio = 0;
+
+    totalPortfolio +=
+    balances.BTC *
+    prices.bitcoin.usd;
+
+    totalPortfolio +=
+    balances.ETH *
+    prices.ethereum.usd;
+
+    totalPortfolio +=
+    balances.BNB *
+    prices.binancecoin.usd;
+
+    totalPortfolio +=
+    balances.SOL *
+    prices.solana.usd;
+
+    totalPortfolio +=
+    balances.USDT;
+
+    totalPortfolio +=
+    balances.USDC;
+
+    document.getElementById(
+        "portfolioValue"
+    ).textContent =
+    "$" +
+    totalPortfolio.toLocaleString(
+        undefined,
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
 
 /* =========================
    TEST OPENSHEET
@@ -56,10 +145,8 @@ async function testData(){
     const response =
     await fetch(API_URL);
 
-    const data =
+    transaksi =
     await response.json();
-
-    console.log(data);
 
 }
 
@@ -73,6 +160,8 @@ async function init(){
     await testData();
 
     await getPrices();
+
+    calculatePortfolio();
 
 }
 
