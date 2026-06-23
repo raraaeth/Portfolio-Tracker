@@ -135,7 +135,76 @@ function calculatePortfolio(){
     );
 
 }
+/* =========================
+   AIRDROP COUNTER
+========================= */
 
+function calculateAirdrop(){
+
+    let totalAirdrop = 0;
+
+    transaksi.forEach(item => {
+
+        const keterangan =
+        item.Keterangan
+        ?.toLowerCase() || "";
+
+        if(
+            keterangan.includes("airdrop")
+        ){
+            totalAirdrop++;
+        }
+
+    });
+
+    document.getElementById(
+        "airdropCount"
+    ).textContent =
+    totalAirdrop;
+
+       }
+/* =========================
+   ACTIVITIES TABLE
+========================= */
+
+function renderActivities(){
+
+    const tbody =
+    document.getElementById(
+        "activityTable"
+    );
+
+    tbody.innerHTML = "";
+
+    transaksi
+    .slice()
+    .reverse()
+    .forEach(item => {
+
+        const row =
+        document.createElement("tr");
+
+        const statusClass =
+        item.Jenis === "Masuk"
+        ? "masuk"
+        : "keluar";
+
+        row.innerHTML = `
+            <td>${item.Tanggal}</td>
+            <td>${item.Wallet}</td>
+            <td class="${statusClass}">
+                ${item.Jenis}
+            </td>
+            <td>${item.Asset}</td>
+            <td>${item.Amount}</td>
+            <td>${item.Keterangan}</td>
+        `;
+
+        tbody.appendChild(row);
+
+    });
+
+}
 /* =========================
    TEST OPENSHEET
 ========================= */
@@ -162,6 +231,8 @@ async function init(){
     await getPrices();
 
     calculatePortfolio();
+    calculateAirdrop();
+   renderActivities();
 
 }
 
