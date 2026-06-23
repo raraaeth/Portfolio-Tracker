@@ -7,6 +7,7 @@
 
 let transaksi = [];
 let prices = {};
+let walletChart = null;
 
 /* =========================
    COINGECKO
@@ -206,6 +207,140 @@ function renderActivities(){
 
 }
 /* =========================
+   WALLET ALLOCATION
+========================= */
+
+function renderWalletAllocation(){
+
+    const wallets = {};
+
+    transaksi.forEach(item => {
+
+        const asset =
+        item.Asset.toUpperCase();
+
+        const amount =
+        parseFloat(item.Amount) || 0;
+
+        if(
+            ![
+                "BTC",
+                "ETH",
+                "BNB",
+                "SOL",
+                "USDT",
+                "USDC"
+            ].includes(asset)
+        ){
+            return;
+        }
+
+        const wallet =
+        item.Wallet;
+
+        if(!wallets[wallet]){
+
+            wallets[wallet] = {
+                BTC:0,
+                ETH:0,
+                BNB:0,
+                SOL:0,
+                USDT:0,
+                USDC:0
+            };
+
+        }
+
+        if(item.Jenis === "Masuk"){
+
+            wallets[wallet][asset] += amount;
+
+        }
+
+        if(item.Jenis === "Keluar"){
+
+            wallets[wallet][asset] -= amount;
+
+        }
+
+    });
+
+    const labels = [];
+    const values = [];
+
+    Object.keys(wallets).forEach(wallet => {
+
+        const balance =
+        wallets[wallet];
+
+        let usd = 0;
+
+        usd +=
+        balance.BTC *
+        prices.bitcoin.usd;
+
+        usd +=
+        balance.ETH *
+        prices.ethereum.usd;
+
+        usd +=
+        balance.BNB *
+        prices.binancecoin.usd;
+
+        usd +=
+        balance.SOL *
+        prices.solana.usd;
+
+        usd += balance.USDT;
+
+        usd += balance.USDC;
+
+        labels.push(wallet);
+
+        values.push(
+            Number(usd.toFixed(2))
+        );
+
+    });
+
+    const ctx =
+    document
+    .getElementById("walletChart")
+    .getContext("2d");
+
+    if(walletChart){
+
+        walletChart.destroy();
+
+    }
+
+    walletChart =
+    new Chart(ctx, {
+
+        type:"pie",
+
+        data:{
+            labels:labels,
+            datasets:[{
+                data:values
+            }]
+        },
+
+        options:{
+            responsive:true,
+
+            plugins:{
+                legend:{
+                    position:"bottom"
+                }
+            }
+        }
+
+    });
+
+}
+
+/* =========================
    TEST OPENSHEET
 ========================= */
 
@@ -232,8 +367,9 @@ async function init(){
 
     calculatePortfolio();
     calculateAirdrop();
-   renderActivities();
-
+    renderActivities();
+    renderWalletAllocation();
+   
 }
 
 init();
