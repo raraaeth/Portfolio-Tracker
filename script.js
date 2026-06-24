@@ -699,14 +699,6 @@ document
     "change",
     renderActivities
 );
-document
-.getElementById(
-    "walletFilter"
-)
-.addEventListener(
-    "change",
-    renderActivities
-);
 
 /* =========================
    PORTFOLIO VALUE
@@ -1112,17 +1104,7 @@ function renderBalanceChart(){
     });
 
            }
-/* =========================
-   WALLET SUMMARY
-========================= */
 
-function renderWalletSummary(){
-
-    console.log(
-        "Wallet Summary Ready"
-    );
-
-}
 
 /* =========================
    WALLET SUMMARY
