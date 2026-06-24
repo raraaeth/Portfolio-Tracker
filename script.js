@@ -10,6 +10,7 @@ let prices = {};
 let walletChart = null;
 let selectedWallets = [];
 let selectedAssetWallet = null;
+let airdropLimit = 5;
 
 /* =========================
    COINGECKO
@@ -1323,7 +1324,9 @@ function renderAirdropHoldings(){
     </div>
 
 `;
-    data.forEach(
+    data
+.slice(0, airdropLimit)
+.forEach(
         (item,index) => {
 
             let medal = "🏅";
@@ -1381,6 +1384,27 @@ function renderAirdropHoldings(){
 
        }
 
+/* =========================
+   AIRDROP FILTER
+========================= */
+
+document
+.getElementById(
+    "airdropLimit"
+)
+.addEventListener(
+    "change",
+    (e) => {
+
+        airdropLimit =
+        Number(
+            e.target.value
+        );
+
+        renderAirdropHoldings();
+
+    }
+);
 
 /* =========================
    INIT
