@@ -1045,21 +1045,59 @@ function renderBalanceChart(){
 
             datasets:[{
 
-                label:"Portfolio",
+    label:"Portfolio",
 
-                data:values,
+    data:values,
 
-                tension:0.4,
+    tension:0.4,
 
-                fill:false
+    fill:false,
 
-            }]
+    borderColor:"#ffffff",
+
+    backgroundColor:"#ffffff",
+
+    pointBackgroundColor:"#ffffff",
+
+    pointBorderColor:"#ffffff",
+
+    pointRadius:4,
+
+    borderWidth:3
+
+}]
 
         },
 
         options:{
+           responsive:true,
+           scales:{
 
-            responsive:true,
+    x:{
+
+        ticks:{
+            color:"#ffffff"
+        },
+
+        grid:{
+            color:"rgba(255,255,255,0.1)"
+        }
+
+    },
+
+    y:{
+
+        ticks:{
+            color:"#ffffff"
+        },
+
+        grid:{
+            color:"rgba(255,255,255,0.1)"
+        }
+
+    }
+
+},
 
             plugins:{
 
