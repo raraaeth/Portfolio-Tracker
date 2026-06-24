@@ -1354,7 +1354,7 @@ function renderAirdropHoldings(){
 
             <div class="airdrop-amount">
 
-                ${item.amount}${item.asset}
+                ${item.amount} ${item.asset}
 
             </div>
 
@@ -1366,6 +1366,7 @@ function renderAirdropHoldings(){
 
     }
 );
+}
 
 /* =========================
    AIRDROP FILTER
