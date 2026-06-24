@@ -738,6 +738,122 @@ monthlyPnL >= 0
 : "#ef4444";
 
 }
+
+/* =========================
+   BALANCE CHART
+========================= */
+
+let balanceChart = null;
+
+function renderBalanceChart(){
+
+    const dateMap = {};
+
+    transaksi.forEach(item => {
+
+        const date =
+        item.Tanggal;
+
+        if(
+            !dateMap[date]
+        ){
+            dateMap[date] = [];
+        }
+
+        dateMap[date].push(item);
+
+    });
+
+    const labels = [];
+
+    const values = [];
+
+    const dates =
+    Object.keys(dateMap)
+    .sort();
+
+    dates.forEach(date => {
+
+        const dataUntilDate =
+
+        transaksi.filter(item => {
+
+            return (
+                item.Tanggal <= date
+            );
+
+        });
+
+        labels.push(date);
+
+        values.push(
+
+            Number(
+
+                getPortfolioValue(
+                    dataUntilDate
+                ).toFixed(2)
+
+            )
+
+        );
+
+    });
+
+    const ctx =
+    document
+    .getElementById(
+        "balanceChart"
+    )
+    .getContext("2d");
+
+    if(balanceChart){
+
+        balanceChart.destroy();
+
+    }
+
+    balanceChart =
+    new Chart(ctx,{
+
+        type:"line",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[{
+
+                label:"Portfolio",
+
+                data:values,
+
+                tension:0.4,
+
+                fill:false
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            plugins:{
+
+                legend:{
+                    display:false
+                }
+
+            }
+
+        }
+
+    });
+
+           }
+
 /* =========================
    INIT
 ========================= */
@@ -754,6 +870,7 @@ async function init(){
     populateWalletFilter();
     renderActivities();
     renderWalletAllocation();
+    renderBalanceChart();
    
 }
 
