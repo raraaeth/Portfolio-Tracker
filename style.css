@@ -296,6 +296,56 @@ font-weight:bold;
 }
 
 /* =========================
+   WALLET ASSETS
+========================= */
+
+.wallet-assets-card{
+
+    background:#1e293b;
+
+    padding:25px;
+
+}
+
+.wallet-assets-card h2{
+
+    margin-bottom:20px;
+
+}
+
+.wallet-assets-card table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+}
+
+.wallet-assets-card th{
+
+    background:#334155;
+
+}
+
+.wallet-assets-card th,
+.wallet-assets-card td{
+
+    padding:12px;
+
+    text-align:left;
+
+}
+
+.wallet-assets-card tbody tr{
+
+    border-bottom:
+    1px solid #334155;
+
+}
+
+/* =========================
 RESPONSIVE
 ========================= */
 
