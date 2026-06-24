@@ -193,38 +193,69 @@ max-height:350px;
 
 }
 
-.wallet-summary-card table{
+.wallet-item{
 
-    width:100%;
+    display:flex;
 
-    border-collapse:collapse;
+    justify-content:space-between;
 
-}
+    align-items:center;
 
-.wallet-summary-card th{
+    padding:14px;
 
-    background:#f1f5f9;
+    border-radius:12px;
 
-}
-
-.wallet-summary-card th,
-.wallet-summary-card td{
-
-    padding:12px;
-
-    text-align:left;
-
-}
-
-.wallet-summary-card tbody tr{
-
-    border-bottom:1px solid #e5e7eb;
-
-}
-
-.wallet-summary-card tbody tr:hover{
+    margin-bottom:10px;
 
     background:#f8fafc;
+
+}
+
+.wallet-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.wallet-rank{
+
+    width:32px;
+
+    height:32px;
+
+    border-radius:50%;
+
+    background:#1e293b;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+.wallet-name{
+
+    font-weight:600;
+
+}
+
+.wallet-value{
+
+    font-weight:bold;
+
+    color:#16a34a;
 
 }
 
