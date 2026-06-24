@@ -431,121 +431,7 @@ font-weight:bold;
 
 }
 
-/* =========================
-   AIRDROP HOLDINGS
-========================= */
 
-.airdrop-holdings-card{
-
-    background:#1e293b;
-
-    padding:25px;
-
-}
-
-.airdrop-holdings-card h2{
-
-    margin-bottom:20px;
-
-}
-
-/* HEADER */
-
-.airdrop-header{
-
-    display:grid;
-
-    grid-template-columns:
-    50px
-    1.5fr
-    80px
-    100px;
-
-    padding:0 14px 10px;
-
-    color:#94a3b8;
-
-    font-size:12px;
-
-    text-transform:uppercase;
-
-    font-weight:600;
-
-}
-
-/* ITEM */
-
-.airdrop-item{
-
-    display:grid;
-
-    grid-template-columns:
-    50px
-    1fr
-    auto;
-
-    align-items:center;
-
-    padding:14px 16px;
-
-    margin-bottom:10px;
-
-    border-radius:12px;
-
-    background:#334155;
-
-}
-
-/* DETAIL AIRDROP */
-.airdrop-rank{
-
-    text-align:center;
-
-    font-size:22px;
-
-}
-
-.airdrop-project{
-
-    font-weight:600;
-
-    color:#ffffff;
-
-}
-
-.airdrop-amount{
-
-    color:#22c55e;
-
-    font-weight:bold;
-
-    text-align:right;
-
-    white-space:nowrap;
-
-}
-
-/* AIRDROP STATS */
-
-#airdropStats{
-
-    margin-bottom:15px;
-
-    color:#cbd5e1;
-
-    line-height:1.8;
-
-}
-
-/* SHOW FILTER */
-
-.airdrop-controls{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
 
 /* =========================
    AIRDROP HOLDINGS
@@ -627,14 +513,16 @@ font-weight:bold;
     background:#334155;
 
 }
-    .airdrop-rank{
+
+.airdrop-rank{
 
     text-align:center;
 
     font-size:18px;
 
-    }
-    .airdrop-project{
+}
+
+.airdrop-project{
 
     font-weight:600;
 
@@ -642,9 +530,9 @@ font-weight:bold;
 
     font-size:18px;
 
-    }
-    
-    .airdrop-amount{
+}
+
+.airdrop-amount{
 
     color:#22c55e;
 
@@ -656,8 +544,8 @@ font-weight:bold;
 
     font-size:18px;
 
-    }
-    
+}
+
 
 /* =========================
 RESPONSIVE
