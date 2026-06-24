@@ -688,9 +688,12 @@ monthlyPortfolio === 0
     monthlyPortfolio
 ) * 100;
 
-    document.getElementById(
+    const weeklyElement =
+document.getElementById(
     "weeklyPnl"
-).innerHTML =
+);
+
+weeklyElement.innerHTML =
 
 formatPnL(
     weeklyPnL
@@ -703,15 +706,18 @@ formatPercent(
 ) +
 
 "</small>";
-   weeklyElement.style.color =
+
+weeklyElement.style.color =
 
 weeklyPnL >= 0
 ? "#22c55e"
 : "#ef4444";
-
+   const monthlyElement =
 document.getElementById(
     "monthlyPnl"
-).innerHTML =
+);
+
+monthlyElement.innerHTML =
 
 formatPnL(
     monthlyPnL
@@ -724,7 +730,8 @@ formatPercent(
 ) +
 
 "</small>";
-   monthlyElement.style.color =
+
+monthlyElement.style.color =
 
 monthlyPnL >= 0
 ? "#22c55e"
