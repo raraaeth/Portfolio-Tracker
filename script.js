@@ -578,6 +578,33 @@ function formatPnL(value){
 }
 
 /* =========================
+   FORMAT PERCENT
+========================= */
+
+function formatPercent(value){
+
+    const prefix =
+
+    value >= 0
+    ? "+"
+    : "-";
+
+    return (
+
+        prefix +
+
+        Math.abs(value)
+        .toFixed(2)
+
+        +
+
+        "%"
+
+    );
+
+}
+
+/* =========================
    PNL CALCULATOR
 ========================= */
 
@@ -643,19 +670,55 @@ function calculatePnL(){
     currentPortfolio -
     monthlyPortfolio;
 
-    document.getElementById(
-        "weeklyPnl"
-    ).textContent =
-    formatPnL(
-        weeklyPnL
-    );
+   const weeklyPercent =
+
+weeklyPortfolio === 0
+? 0
+: (
+    weeklyPnL /
+    weeklyPortfolio
+) * 100;
+
+const monthlyPercent =
+
+monthlyPortfolio === 0
+? 0
+: (
+    monthlyPnL /
+    monthlyPortfolio
+) * 100;
 
     document.getElementById(
-        "monthlyPnl"
-    ).textContent =
-    formatPnL(
-        monthlyPnL
-    );
+    "weeklyPnl"
+).innerHTML =
+
+formatPnL(
+    weeklyPnL
+) +
+
+"<br><small>" +
+
+formatPercent(
+    weeklyPercent
+) +
+
+"</small>";
+
+document.getElementById(
+    "monthlyPnl"
+).innerHTML =
+
+formatPnL(
+    monthlyPnL
+) +
+
+"<br><small>" +
+
+formatPercent(
+    monthlyPercent
+) +
+
+"</small>";
 
 }
 /* =========================
