@@ -703,6 +703,11 @@ formatPercent(
 ) +
 
 "</small>";
+   weeklyElement.style.color =
+
+weeklyPnL >= 0
+? "#22c55e"
+: "#ef4444";
 
 document.getElementById(
     "monthlyPnl"
@@ -719,6 +724,11 @@ formatPercent(
 ) +
 
 "</small>";
+   monthlyElement.style.color =
+
+monthlyPnL >= 0
+? "#22c55e"
+: "#ef4444";
 
 }
 /* =========================
