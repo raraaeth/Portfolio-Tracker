@@ -8,6 +8,7 @@
 let transaksi = [];
 let prices = {};
 let walletChart = null;
+let selectedWallets = [];
 
 /* =========================
    COINGECKO
@@ -183,17 +184,6 @@ function renderActivities(){
             "periodFilter"
         ).value
     );
-   const selectedWallets =
-[
-    ...document
-    .getElementById(
-        "walletFilter"
-    )
-    .selectedOptions
-]
-.map(
-    option => option.value
-);
 
     const today =
     new Date();
@@ -408,14 +398,15 @@ async function testData(){
 
 function populateWalletFilter(){
 
-    const walletFilter =
+    const container =
     document.getElementById(
         "walletFilter"
     );
 
-    walletFilter.innerHTML = "";
+    container.innerHTML = "";
 
-    const wallets = [
+    const wallets =
+    [
         ...new Set(
             transaksi.map(
                 item => item.Wallet
@@ -425,18 +416,50 @@ function populateWalletFilter(){
 
     wallets.forEach(wallet => {
 
-        const option =
-        document.createElement(
-            "option"
-        );
+        const tag =
+        document.createElement("div");
 
-        option.value = wallet;
+        tag.className =
+        "wallet-tag";
 
-        option.textContent =
+        tag.textContent =
         wallet;
 
-        walletFilter.appendChild(
-            option
+        tag.addEventListener(
+            "click",
+            () => {
+
+                tag.classList.toggle(
+                    "active"
+                );
+
+                if(
+                    selectedWallets.includes(
+                        wallet
+                    )
+                ){
+
+                    selectedWallets =
+                    selectedWallets.filter(
+                        item =>
+                        item !== wallet
+                    );
+
+                }else{
+
+                    selectedWallets.push(
+                        wallet
+                    );
+
+                }
+
+                renderActivities();
+
+            }
+        );
+
+        container.appendChild(
+            tag
         );
 
     });
