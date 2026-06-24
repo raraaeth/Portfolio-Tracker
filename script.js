@@ -1112,6 +1112,121 @@ function renderBalanceChart(){
     });
 
            }
+/* =========================
+   WALLET SUMMARY
+========================= */
+
+function renderWalletSummary(){
+
+    console.log(
+        "Wallet Summary Ready"
+    );
+
+}
+
+/* =========================
+   WALLET SUMMARY
+========================= */
+
+function renderWalletSummary(){
+
+    const tbody =
+    document.getElementById(
+        "walletSummaryTable"
+    );
+
+    tbody.innerHTML = "";
+
+    const wallets = {};
+
+    transaksi.forEach(item => {
+
+        const asset =
+        item.Asset.toUpperCase();
+
+        if(
+            ![
+                "BTC",
+                "ETH",
+                "BNB",
+                "SOL",
+                "USDT",
+                "USDC"
+            ].includes(asset)
+        ){
+            return;
+        }
+
+        if(!wallets[item.Wallet]){
+
+            wallets[item.Wallet] = [];
+
+        }
+
+        wallets[item.Wallet].push(item);
+
+    });
+
+    const summaryData = [];
+
+    Object.keys(wallets)
+
+    .forEach(wallet => {
+
+        summaryData.push({
+
+            wallet,
+
+            value:
+            getPortfolioValue(
+                wallets[wallet]
+            )
+
+        });
+
+    });
+
+    summaryData
+
+    .sort(
+        (a,b) =>
+        b.value - a.value
+    )
+
+    .forEach(
+        (item,index) => {
+
+            const row =
+            document.createElement(
+                "tr"
+            );
+
+            row.innerHTML = `
+
+                <td>
+
+                    #${index + 1}
+
+                    ${item.wallet}
+
+                </td>
+
+                <td>
+
+                    $${item.value.toFixed(2)}
+
+                </td>
+
+            `;
+
+            tbody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
 
 /* =========================
    INIT
@@ -1129,6 +1244,7 @@ async function init(){
     populateWalletFilter();
     renderActivities();
     renderWalletAllocation();
+    renderWalletSummary();
     renderBalanceChart();
     populateAssetWalletFilter();
    
