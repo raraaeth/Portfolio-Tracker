@@ -612,13 +612,13 @@ font-weight:bold;
     display:grid;
 
     grid-template-columns:
-    50px
+    40px
     1fr
     auto;
 
     align-items:center;
 
-    padding:14px 16px;
+    padding:16px;
 
     margin-bottom:10px;
 
@@ -627,38 +627,37 @@ font-weight:bold;
     background:#334155;
 
 }
-
-.airdrop-rank{
+    .airdrop-rank{
 
     text-align:center;
 
-    font-size:22px;
+    font-size:20px;
 
-}
-
-.airdrop-project{
+    }
+    .airdrop-project{
 
     font-weight:600;
 
     color:#ffffff;
 
-    font-size:16px;
+    font-size:18px;
 
-}
-
-.airdrop-amount{
+    }
+    
+    .airdrop-amount{
 
     color:#22c55e;
 
     font-weight:bold;
 
-    text-align:right;
-
     white-space:nowrap;
 
-    font-size:16px;
+    text-align:right;
 
-}
+    font-size:18px;
+
+    }
+    
 
 /* =========================
 RESPONSIVE
