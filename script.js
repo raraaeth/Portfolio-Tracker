@@ -1231,6 +1231,141 @@ tbody.appendChild(
     );
 
 }
+/* =========================
+   AIRDROP HOLDINGS
+========================= */
+
+function renderAirdropHoldings(){
+
+    const container =
+    document.getElementById(
+        "airdropHoldings"
+    );
+
+    container.innerHTML = "";
+
+    const projects = {};
+
+    transaksi.forEach(item => {
+
+        const ket =
+        item.Keterangan || "";
+
+        if(
+            !ket.toLowerCase()
+            .includes("airdrop")
+        ){
+            return;
+        }
+
+        const project =
+        ket.replace(
+            /airdrop\s*-\s*/i,
+            ""
+        ).trim();
+
+        const amount =
+        parseFloat(
+            item.Amount
+        ) || 0;
+
+        if(
+            !projects[project]
+        ){
+
+            projects[project] = {
+
+                asset:
+                item.Asset,
+
+                amount:0
+
+            };
+
+        }
+
+        projects[project].amount +=
+        amount;
+
+    });
+
+    const data =
+
+    Object.entries(projects)
+
+    .map(([project,data]) => ({
+
+        project,
+
+        asset:data.asset,
+
+        amount:data.amount
+
+    }))
+
+    .sort(
+        (a,b) =>
+        b.amount - a.amount
+    );
+
+    data.forEach(
+        (item,index) => {
+
+            let medal = "🏅";
+
+            if(index === 0)
+                medal = "🥇";
+
+            if(index === 1)
+                medal = "🥈";
+
+            if(index === 2)
+                medal = "🥉";
+
+            const card =
+            document.createElement(
+                "div"
+            );
+
+            card.className =
+            "airdrop-item";
+
+            card.innerHTML = `
+
+                <div>
+
+                    <div class="airdrop-project">
+
+                        ${medal}
+                        ${item.project}
+
+                    </div>
+
+                    <small>
+
+                        ${item.asset}
+
+                    </small>
+
+                </div>
+
+                <div class="airdrop-amount">
+
+                    ${item.amount}
+
+                </div>
+
+            `;
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+       }
+
 
 /* =========================
    INIT
@@ -1249,6 +1384,7 @@ async function init(){
     renderActivities();
     renderWalletAllocation();
     renderWalletSummary();
+    renderAirdropHoldings();
     renderBalanceChart();
     populateAssetWalletFilter();
    
