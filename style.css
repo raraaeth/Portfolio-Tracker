@@ -31,29 +31,41 @@ LIVE PRICE SECTION
 ========================= */
 
 .live-price-card{
-background:#ffffff;
-color:#111827;
 
-display:grid;
-grid-template-columns:repeat(4,1fr);
+    background:#ffffff;
+    color:#111827;
 
-gap:15px;
-padding:20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:8px;
+    padding:10px 12px;
 
 }
 
 .price-item{
-text-align:center;
+
+    text-align:center;
+
 }
 
 .price-item span{
-display:block;
-font-size:14px;
-color:#64748b;
+
+    display:block;
+
+    font-size:11px;
+
+    color:#64748b;
+
+    margin-bottom:2px;
+
 }
 
 .price-item strong{
-font-size:20px;
+
+    font-size:14px;
+    font-weight:600;
+
 }
 
 /* =========================
