@@ -488,6 +488,177 @@ document
 );
 
 /* =========================
+   PORTFOLIO VALUE
+========================= */
+
+function getPortfolioValue(data){
+
+    let balances = {
+
+        BTC:0,
+        ETH:0,
+        BNB:0,
+        SOL:0,
+        USDT:0,
+        USDC:0
+
+    };
+
+    data.forEach(item => {
+
+        const asset =
+        item.Asset.toUpperCase();
+
+        if(
+            !balances.hasOwnProperty(asset)
+        ){
+            return;
+        }
+
+        const amount =
+        parseFloat(item.Amount) || 0;
+
+        if(item.Jenis === "Masuk"){
+
+            balances[asset] += amount;
+
+        }
+
+        if(item.Jenis === "Keluar"){
+
+            balances[asset] -= amount;
+
+        }
+
+    });
+
+    let total = 0;
+
+    total +=
+    balances.BTC *
+    prices.bitcoin.usd;
+
+    total +=
+    balances.ETH *
+    prices.ethereum.usd;
+
+    total +=
+    balances.BNB *
+    prices.binancecoin.usd;
+
+    total +=
+    balances.SOL *
+    prices.solana.usd;
+
+    total += balances.USDT;
+
+    total += balances.USDC;
+
+    return total;
+
+}
+/* =========================
+   FORMAT PNL
+========================= */
+
+function formatPnL(value){
+
+    const prefix =
+    value >= 0
+    ? "+"
+    : "-";
+
+    return (
+        prefix +
+        "$" +
+        Math.abs(value)
+        .toFixed(2)
+    );
+
+}
+
+/* =========================
+   PNL CALCULATOR
+========================= */
+
+function calculatePnL(){
+
+    const today =
+    new Date();
+
+    const weekDate =
+    new Date();
+
+    weekDate.setDate(
+        today.getDate() - 7
+    );
+
+    const monthDate =
+    new Date();
+
+    monthDate.setDate(
+        today.getDate() - 30
+    );
+
+    const currentPortfolio =
+    getPortfolioValue(
+        transaksi
+    );
+
+    const weeklyPortfolio =
+    getPortfolioValue(
+
+        transaksi.filter(item => {
+
+            return (
+                new Date(
+                    item.Tanggal
+                ) <= weekDate
+            );
+
+        })
+
+    );
+
+    const monthlyPortfolio =
+    getPortfolioValue(
+
+        transaksi.filter(item => {
+
+            return (
+                new Date(
+                    item.Tanggal
+                ) <= monthDate
+            );
+
+        })
+
+    );
+
+    const weeklyPnL =
+    currentPortfolio -
+    weeklyPortfolio;
+
+    const monthlyPnL =
+    currentPortfolio -
+    monthlyPortfolio;
+
+    document.getElementById(
+        "weeklyPnl"
+    ).textContent =
+    formatPnL(
+        weeklyPnL
+    );
+
+    document.getElementById(
+        "monthlyPnl"
+    ).textContent =
+    formatPnL(
+        monthlyPnL
+    );
+
+}
+/* =========================
    INIT
 ========================= */
 
@@ -499,6 +670,7 @@ async function init(){
 
     calculatePortfolio();
     calculateAirdrop();
+    calculatePnL();
     populateWalletFilter();
     renderActivities();
     renderWalletAllocation();
