@@ -1308,6 +1308,53 @@ function renderAirdropHoldings(){
         (a,b) =>
         b.amount - a.amount
     );
+   /* =========================
+   AIRDROP STATS
+========================= */
+
+const totalProjects =
+data.length;
+
+const topProject =
+
+data.length > 0
+? data[0].project
+: "-";
+
+const largestAllocation =
+
+data.length > 0
+? `${data[0].amount} ${data[0].asset}`
+: "-";
+
+document.getElementById(
+    "airdropTitle"
+).textContent =
+
+`🎁 My Airdrop • ${totalProjects} Projects`;
+
+document.getElementById(
+    "airdropStats"
+).innerHTML = `
+
+    <strong>
+        Top Project:
+    </strong>
+
+    ${topProject}
+
+    <br>
+
+    <strong>
+        Largest Allocation:
+    </strong>
+
+    ${largestAllocation}
+
+`;
+/* =========================
+   AIRDROP DETAIL
+========================= */
    
     data
 
