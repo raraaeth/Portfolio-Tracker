@@ -1337,7 +1337,7 @@ document.getElementById(
     "airdropStats"
 ).innerHTML = `
 
-    <strong>
+    🏆 <strong>
         Top Project:
     </strong>
 
@@ -1345,7 +1345,7 @@ document.getElementById(
 
     <br>
 
-    <strong>
+   💰 <strong>
         Largest Allocation:
     </strong>
 
