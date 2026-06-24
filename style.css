@@ -432,6 +432,56 @@ font-weight:bold;
 }
 
 /* =========================
+   AIRDROP HOLDINGS
+========================= */
+
+.airdrop-holdings-card{
+
+    background:#1e293b;
+
+    padding:25px;
+
+}
+
+.airdrop-holdings-card h2{
+
+    margin-bottom:20px;
+
+}
+
+.airdrop-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    border-radius:10px;
+
+    background:#334155;
+
+}
+
+.airdrop-project{
+
+    font-weight:600;
+
+}
+
+.airdrop-amount{
+
+    color:#22c55e;
+
+    font-weight:bold;
+
+}
+
+/* =========================
 RESPONSIVE
 ========================= */
 
