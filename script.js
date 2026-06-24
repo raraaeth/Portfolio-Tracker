@@ -1307,7 +1307,22 @@ function renderAirdropHoldings(){
         (a,b) =>
         b.amount - a.amount
     );
+   
+   container.innerHTML = `
 
+    <div class="airdrop-header">
+
+        <div>#</div>
+
+        <div>Project</div>
+
+        <div>Token</div>
+
+        <div>Amount</div>
+
+    </div>
+
+`;
     data.forEach(
         (item,index) => {
 
