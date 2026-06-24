@@ -9,6 +9,7 @@ let transaksi = [];
 let prices = {};
 let walletChart = null;
 let selectedWallets = [];
+let selectedAssetWallet = null;
 
 /* =========================
    COINGECKO
@@ -467,6 +468,226 @@ function populateWalletFilter(){
 }
 
 /* =========================
+   WALLET ASSETS
+========================= */
+
+function renderWalletAssets(){
+
+    if(!selectedAssetWallet){
+
+        return;
+
+    }
+
+    const balances = {};
+
+    transaksi.forEach(item => {
+
+        if(
+            item.Wallet !==
+            selectedAssetWallet
+        ){
+            return;
+        }
+
+        const asset =
+        item.Asset.toUpperCase();
+
+        const amount =
+        parseFloat(
+            item.Amount
+        ) || 0;
+
+        if(
+            !balances[asset]
+        ){
+
+            balances[asset] = 0;
+
+        }
+
+        if(
+            item.Jenis ===
+            "Masuk"
+        ){
+
+            balances[asset] += amount;
+
+        }
+
+        if(
+            item.Jenis ===
+            "Keluar"
+        ){
+
+            balances[asset] -= amount;
+
+        }
+
+    });
+
+    const tbody =
+    document.getElementById(
+        "walletAssetTable"
+    );
+
+    tbody.innerHTML = "";
+
+    Object.keys(balances)
+
+    .sort()
+
+    .forEach(asset => {
+
+        let usd = "-";
+
+        if(
+            asset === "BTC"
+        ){
+
+            usd =
+            "$" +
+            (
+                balances[asset] *
+                prices.bitcoin.usd
+            ).toFixed(2);
+
+        }
+
+        if(
+            asset === "ETH"
+        ){
+
+            usd =
+            "$" +
+            (
+                balances[asset] *
+                prices.ethereum.usd
+            ).toFixed(2);
+
+        }
+
+        if(
+            asset === "BNB"
+        ){
+
+            usd =
+            "$" +
+            (
+                balances[asset] *
+                prices.binancecoin.usd
+            ).toFixed(2);
+
+        }
+
+        if(
+            asset === "SOL"
+        ){
+
+            usd =
+            "$" +
+            (
+                balances[asset] *
+                prices.solana.usd
+            ).toFixed(2);
+
+        }
+
+        const row =
+        document.createElement(
+            "tr"
+        );
+
+        row.innerHTML = `
+
+            <td>${asset}</td>
+
+            <td>
+                ${balances[asset]}
+            </td>
+
+            <td>${usd}</td>
+
+        `;
+
+        tbody.appendChild(row);
+
+    });
+
+               }
+
+function populateAssetWalletFilter(){
+
+    const container =
+    document.getElementById(
+        "walletAssetFilter"
+    );
+
+    container.innerHTML = "";
+
+    const wallets =
+
+    [
+        ...new Set(
+            transaksi.map(
+                item =>
+                item.Wallet
+            )
+        )
+    ];
+
+    wallets.forEach(wallet => {
+
+        const tag =
+        document.createElement(
+            "div"
+        );
+
+        tag.className =
+        "wallet-tag";
+
+        tag.textContent =
+        wallet;
+
+        tag.addEventListener(
+            "click",
+            () => {
+
+                selectedAssetWallet =
+                wallet;
+
+                document
+
+                .querySelectorAll(
+                    "#walletAssetFilter .wallet-tag"
+                )
+
+                .forEach(tag => {
+
+                    tag.classList.remove(
+                        "active"
+                    );
+
+                });
+
+                tag.classList.add(
+                    "active"
+                );
+
+                renderWalletAssets();
+
+            }
+        );
+
+        container.appendChild(
+            tag
+        );
+
+    });
+
+}
+
+/* =========================
    FILTER EVENTS
 ========================= */
 
@@ -871,6 +1092,7 @@ async function init(){
     renderActivities();
     renderWalletAllocation();
     renderBalanceChart();
+    populateAssetWalletFilter();
    
 }
 
