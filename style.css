@@ -538,8 +538,49 @@ font-weight:bold;
     font-weight:bold;
 
     font-size:18px;
+    
+}
+
+/* AIRDROP STATS */
+
+#airdropStats{
+
+    margin-bottom:15px;
+
+    color:#cbd5e1;
+
+    line-height:1.8;
 
 }
+
+/* SHOW FILTER */
+
+.airdrop-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.airdrop-controls select{
+
+    background:#334155;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+}
+
 
 /* =========================
 RESPONSIVE
