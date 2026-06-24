@@ -481,13 +481,12 @@ font-weight:bold;
 
     grid-template-columns:
     50px
-    1.5fr
-    80px
-    100px;
+    1fr
+    auto;
 
     align-items:center;
 
-    padding:14px;
+    padding:14px 16px;
 
     margin-bottom:10px;
 
@@ -497,17 +496,14 @@ font-weight:bold;
 
 }
 
-/* RANK */
-
+/* DETAIL AIRDROP */
 .airdrop-rank{
-
-    font-size:22px;
 
     text-align:center;
 
-}
+    font-size:22px;
 
-/* PROJECT */
+}
 
 .airdrop-project{
 
@@ -517,28 +513,56 @@ font-weight:bold;
 
 }
 
-/* TOKEN */
-
-.airdrop-token{
-
-    color:#cbd5e1;
-
-    font-size:14px;
-
-}
-
-/* AMOUNT */
-
 .airdrop-amount{
-
-    text-align:right;
 
     color:#22c55e;
 
     font-weight:bold;
 
-    font-size:18px;
-    
+    text-align:right;
+
+    white-space:nowrap;
+
+}
+
+/* AIRDROP STATS */
+
+#airdropStats{
+
+    margin-bottom:15px;
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+}
+
+/* SHOW FILTER */
+
+.airdrop-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+/* =========================
+   AIRDROP HOLDINGS
+========================= */
+
+.airdrop-holdings-card{
+
+    background:#1e293b;
+
+    padding:25px;
+
+}
+
+.airdrop-holdings-card h2{
+
+    margin-bottom:20px;
+
 }
 
 /* AIRDROP STATS */
@@ -581,6 +605,60 @@ font-weight:bold;
 
 }
 
+/* AIRDROP ITEM */
+
+.airdrop-item{
+
+    display:grid;
+
+    grid-template-columns:
+    50px
+    1fr
+    auto;
+
+    align-items:center;
+
+    padding:14px 16px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    background:#334155;
+
+}
+
+.airdrop-rank{
+
+    text-align:center;
+
+    font-size:22px;
+
+}
+
+.airdrop-project{
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    font-size:16px;
+
+}
+
+.airdrop-amount{
+
+    color:#22c55e;
+
+    font-weight:bold;
+
+    text-align:right;
+
+    white-space:nowrap;
+
+    font-size:16px;
+
+}
 
 /* =========================
 RESPONSIVE
