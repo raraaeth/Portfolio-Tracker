@@ -1176,34 +1176,56 @@ function renderWalletSummary(){
     )
 
     .forEach(
-        (item,index) => {
+    (item,index) => {
 
-            const row =
-            document.createElement(
-                "tr"
-            );
+        let medal = "🏅";
 
-            row.innerHTML = `
+        if(index === 0)
+            medal = "🥇";
 
-                <td>
+        if(index === 1)
+            medal = "🥈";
 
-                    #${index + 1}
+        if(index === 2)
+            medal = "🥉";
 
-                    ${item.wallet}
+        const card =
+        document.createElement(
+            "div"
+        );
 
-                </td>
+card.className =
+"wallet-item";
 
-                <td>
+card.innerHTML = `
 
-                    $${item.value.toFixed(2)}
+    <div class="wallet-left">
 
-                </td>
+        <div class="wallet-rank">
 
-            `;
+    ${medal}
 
-            tbody.appendChild(
-                row
-            );
+</div>
+
+        <div class="wallet-name">
+
+            ${item.wallet}
+
+        </div>
+
+    </div>
+
+    <div class="wallet-value">
+
+        $${item.value.toFixed(2)}
+
+    </div>
+
+`;
+
+tbody.appendChild(
+    card
+);
 
         }
     );
