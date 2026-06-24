@@ -214,6 +214,40 @@ border-bottom:1px solid #334155;
 .activities-card td{
     white-space:nowrap;
 }
+/* =========================
+   WALLET FILTER
+========================= */
+
+.wallet-filter{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.wallet-tag{
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:#334155;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    transition:.2s;
+}
+
+.wallet-tag.active{
+
+    background:#22c55e;
+
+    color:white;
+
+}
 
 /* =========================
 BALANCE COMPARISON
