@@ -1309,80 +1309,64 @@ function renderAirdropHoldings(){
         b.amount - a.amount
     );
    
-   container.innerHTML = `
-
-    <div class="airdrop-header">
-
-        <div>#</div>
-
-        <div>Project</div>
-
-        <div>Token</div>
-
-        <div>Amount</div>
-
-    </div>
-
-`;
     data
-.slice(0, airdropLimit)
+
+.slice(
+    0,
+    airdropLimit
+)
+
 .forEach(
-        (item,index) => {
+    (item,index) => {
 
-            let medal = "🏅";
+        let medal = "🏅";
 
-            if(index === 0)
-                medal = "🥇";
+        if(index === 0)
+            medal = "🥇";
 
-            if(index === 1)
-                medal = "🥈";
+        if(index === 1)
+            medal = "🥈";
 
-            if(index === 2)
-                medal = "🥉";
+        if(index === 2)
+            medal = "🥉";
 
-            const card =
-            document.createElement(
-                "div"
-            );
+        const card =
+        document.createElement(
+            "div"
+        );
 
-            card.className =
-            "airdrop-item";
+        card.className =
+        "airdrop-item";
 
-            card.innerHTML = `
+        card.innerHTML = `
 
-                <div>
+            <div class="airdrop-rank">
 
-                    <div class="airdrop-project">
+                ${medal}
 
-                        ${medal}
-                        ${item.project}
+            </div>
 
-                    </div>
+            <div class="airdrop-project">
 
-                    <small>
+                ${item.project}
 
-                        ${item.asset}
+            </div>
 
-                    </small>
+            <div class="airdrop-amount">
 
-                </div>
+                ${item.amount}
+                ${item.asset}
 
-                <div class="airdrop-amount">
+            </div>
 
-                    ${item.amount}
+        `;
 
-                </div>
+        container.appendChild(
+            card
+        );
 
-            `;
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-       }
+    }
+);
 
 /* =========================
    AIRDROP FILTER
