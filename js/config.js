@@ -3,33 +3,90 @@
    File : config.js
 ===================================================== */
 
-/* =========================
+/* ===========================
+   APP INFO
+=========================== */
+
+const APP = {
+
+    NAME : "Portfolio Tracker",
+
+    VERSION : "3.0"
+
+};
+
+/* ===========================
    CONFIG
-========================= */
+=========================== */
 
-const SHEET_ID =
-"1Wnje_mKu73eJyq0a8QlYETunfCCf2ntSKerV5J8qT30";
+const CONFIG = {
 
-const SHEET_NAME =
-"transaksi";
+    SHEET_ID :
 
-const API_URL =
-`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+    "1Wnje_mKu73eJyq0a8QlYETunfCCf2ntSKerV5J8qT30",
 
-/* =========================
-   GLOBAL DATA
-========================= */
+    SHEET_NAME :
 
-let transaksi = [];
+    "transaksi",
 
-let prices = {};
+    API_URL :
 
-let walletChart = null;
+    "https://opensheet.elk.sh/" +
 
-let balanceChart = null;
+    "1Wnje_mKu73eJyq0a8QlYETunfCCf2ntSKerV5J8qT30" +
 
-let selectedWallets = [];
+    "/transaksi",
 
-let selectedAssetWallet = null;
+    PRICE_API :
 
-let airdropLimit = 5;
+    "https://api.coingecko.com/api/v3/simple/price" +
+
+    "?ids=bitcoin,ethereum,binancecoin,solana" +
+
+    "&vs_currencies=usd"
+
+};
+
+/* ===========================
+   VALID ASSETS
+=========================== */
+
+const VALID_ASSETS = [
+
+    "BTC",
+
+    "ETH",
+
+    "BNB",
+
+    "SOL",
+
+    "USDT",
+
+    "USDC"
+
+];
+
+/* ===========================
+   GLOBAL OBJECT
+=========================== */
+
+const Portfolio = {
+
+    raw : [],
+
+    data : [],
+
+    prices : {},
+
+    balances : {},
+
+    wallets : {},
+
+    summary : {},
+
+    activities : [],
+
+    airdrops : []
+
+};
