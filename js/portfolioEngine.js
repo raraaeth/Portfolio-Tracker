@@ -155,3 +155,56 @@ function getPortfolioValue(data){
     );
 
 }
+/* ===========================
+   CALCULATE RESERVE
+=========================== */
+
+function calculateReserve(balances){
+
+    const reserve = {
+
+        stablecoinUSD:0,
+
+        cryptoUSD:0,
+
+        totalUSD:0
+
+    };
+
+    reserve.stablecoinUSD =
+
+        balances.USDT +
+
+        balances.USDC;
+
+    reserve.cryptoUSD =
+
+        balances.BTC *
+
+        prices.bitcoin.usd +
+
+        balances.ETH *
+
+        prices.ethereum.usd +
+
+        balances.BNB *
+
+        prices.binancecoin.usd +
+
+        balances.SOL *
+
+        prices.solana.usd;
+
+    reserve.totalUSD =
+
+        reserve.stablecoinUSD +
+
+        reserve.cryptoUSD;
+
+    PortfolioEngine.reserve =
+
+    reserve;
+
+    return reserve;
+
+}
