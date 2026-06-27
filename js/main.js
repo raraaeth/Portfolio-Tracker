@@ -80,3 +80,18 @@ async function init(){
     );
 
 }
+/* ===========================
+   DEBUG
+=========================== */
+
+function debug(title,data){
+
+    if(!DEBUG) return;
+
+    console.group(title);
+
+    console.log(data);
+
+    console.groupEnd();
+
+}
