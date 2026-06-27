@@ -1435,6 +1435,7 @@ async function init(){
     await testData();
 
     await getPrices();
+   PortfolioEngine.prices = prices;
 
     calculatePortfolio();
     calculateAirdrop();
