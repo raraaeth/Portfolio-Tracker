@@ -1,97 +1,46 @@
-/* =====================================================
-   Portfolio Tracker v3.0
-   File : main.js
-===================================================== */
-
-/* ===========================
-   INITIALIZE APP
-=========================== */
-
 document.addEventListener(
-
     "DOMContentLoaded",
-
     init
-
 );
 
 async function init(){
 
-    console.log(
-
-        APP.NAME,
-
-        "v"+APP.VERSION
-
-    );
-
-    /* ======================
-       LOAD DATA
-    ====================== */
+    debug("1","Start");
 
     await fetchTransactions();
 
+    debug("2",Portfolio.raw);
+
     await fetchPrices();
 
-    /* ======================
-       PROCESS
-    ====================== */
+    debug("3",Portfolio.prices);
 
     processData();
 
-    /* ======================
-       DASHBOARD
-    ====================== */
+    debug("4",Portfolio.data);
 
     updateDashboard();
 
-    /* ======================
-       WALLET
-    ====================== */
+    debug("5","Dashboard");
 
     updateWallet();
 
-    /* ======================
-       ACTIVITIES
-    ====================== */
+    debug("6","Wallet");
 
     updateActivities();
 
+    debug("7","Activities");
+
     initActivityFilter();
 
-    /* ======================
-       AIRDROP
-    ====================== */
+    debug("8","Filter");
 
     initAirdrop();
 
-    /* ======================
-       CHART
-    ====================== */
+    debug("9","Airdrop");
 
     updateCharts();
 
-    console.log(
-
-        "Portfolio Loaded",
-
-        Portfolio
-
-    );
-
-}
-/* ===========================
-   DEBUG
-=========================== */
-
-function debug(title,data){
-
-    if(!DEBUG) return;
-
-    console.group(title);
-
-    console.log(data);
-
-    console.groupEnd();
+    debug("10","Charts");
 
 }
