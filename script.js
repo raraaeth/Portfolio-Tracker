@@ -80,80 +80,46 @@ const API_URL =
 ========================= */
 
 function calculatePortfolio(){
+function calculatePortfolio(){
 
-    let balances = {
+    const balances =
 
-        BTC:0,
-        ETH:0,
-        BNB:0,
-        SOL:0,
-        USDT:0,
-        USDC:0
+    calculateBalances(
 
-    };
+        transaksi
 
-    transaksi.forEach(item => {
+    );
 
-        const asset =
-        item.Asset.toUpperCase();
+    const totalPortfolio =
 
-        const amount =
-        parseFloat(item.Amount) || 0;
+    calculatePortfolioValue(
 
-        if(
-            !balances.hasOwnProperty(asset)
-        ){
-            return;
-        }
+        balances,
 
-        if(item.Jenis === "Masuk"){
+        prices
 
-            balances[asset] += amount;
-
-        }
-
-        if(item.Jenis === "Keluar"){
-
-            balances[asset] -= amount;
-
-        }
-
-    });
-
-    let totalPortfolio = 0;
-
-    totalPortfolio +=
-    balances.BTC *
-    prices.bitcoin.usd;
-
-    totalPortfolio +=
-    balances.ETH *
-    prices.ethereum.usd;
-
-    totalPortfolio +=
-    balances.BNB *
-    prices.binancecoin.usd;
-
-    totalPortfolio +=
-    balances.SOL *
-    prices.solana.usd;
-
-    totalPortfolio +=
-    balances.USDT;
-
-    totalPortfolio +=
-    balances.USDC;
+    );
 
     document.getElementById(
+
         "portfolioValue"
+
     ).textContent =
+
     "$" +
+
     totalPortfolio.toLocaleString(
+
         undefined,
+
         {
+
             minimumFractionDigits:2,
+
             maximumFractionDigits:2
+
         }
+
     );
 
 }
