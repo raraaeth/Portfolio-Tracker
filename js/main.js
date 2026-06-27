@@ -5,42 +5,42 @@ document.addEventListener(
 
 async function init(){
 
-    debug("1","Start");
+    document.title = "STEP 1";
 
     await fetchTransactions();
 
-    debug("2",Portfolio.raw);
+    document.title = "STEP 2";
 
     await fetchPrices();
 
-    debug("3",Portfolio.prices);
+    document.title = "STEP 3";
 
     processData();
 
-    debug("4",Portfolio.data);
+    document.title = "STEP 4";
 
     updateDashboard();
 
-    debug("5","Dashboard");
+    document.title = "STEP 5";
 
     updateWallet();
 
-    debug("6","Wallet");
+    document.title = "STEP 6";
 
     updateActivities();
 
-    debug("7","Activities");
+    document.title = "STEP 7";
 
     initActivityFilter();
 
-    debug("8","Filter");
+    document.title = "STEP 8";
 
     initAirdrop();
 
-    debug("9","Airdrop");
+    document.title = "STEP 9";
 
     updateCharts();
 
-    debug("10","Charts");
+    document.title = "DONE";
 
 }
