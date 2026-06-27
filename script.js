@@ -99,6 +99,11 @@ function calculatePortfolio(){
         prices
 
     );
+   calculateReserve(
+
+    balances
+
+);
 
     document.getElementById(
 
