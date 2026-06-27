@@ -9,7 +9,9 @@
 
 const PortfolioEngine = {
 
-    balances:{},
+   prices:{},
+   
+   balances:{},
 
     portfolioValue:0,
 
@@ -105,25 +107,25 @@ function calculatePortfolioValue(
 
     balances.BTC *
 
-    prices.bitcoin.usd;
+    PortfolioEngine.prices.bitcoin.usd
 
     total +=
 
     balances.ETH *
 
-    prices.ethereum.usd;
+    PortfolioEngine.prices.ethereum.usd;
 
     total +=
 
     balances.BNB *
 
-    prices.binancecoin.usd;
+    PortfolioEngine.prices.binancecoin.usd;
 
     total +=
 
     balances.SOL *
 
-    prices.solana.usd;
+    PortfolioEngine.prices.solana.usd;
 
     total += balances.USDT;
 
