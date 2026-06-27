@@ -12,11 +12,7 @@ let selectedWallets = [];
 let selectedAssetWallet = null;
 let airdropLimit = 5;
 
-/* =========================
-   COINGECKO
-========================= */
 
-async function getPrices(){
 /* =========================
    COINGECKO
 ========================= */
