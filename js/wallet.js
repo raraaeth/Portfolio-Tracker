@@ -240,6 +240,313 @@ function updateWalletSummary(){
 }
 
 /* ===========================
+   POPULATE WALLET FILTER
+=========================== */
+
+function populateWalletFilter(){
+
+    const container =
+
+    $("walletFilter");
+
+    if(!container) return;
+
+    container.innerHTML="";
+
+    Object.keys(
+
+        Portfolio.wallets
+
+    )
+
+    .forEach(wallet=>{
+
+        const label =
+
+        document.createElement(
+
+            "label"
+
+        );
+
+        label.className=
+
+        "wallet-option";
+
+        label.innerHTML=
+
+        `
+
+        <input
+
+        type="checkbox"
+
+        value="${wallet}"
+
+        checked>
+
+        ${wallet}
+
+        `;
+
+        container.appendChild(
+
+            label
+
+        );
+
+    });
+
+}
+
+/* ===========================
+   INIT WALLET FILTER
+=========================== */
+
+function initWalletFilter(){
+
+    const checkbox =
+
+    document.querySelectorAll(
+
+        "#walletFilter input"
+
+    );
+
+    checkbox.forEach(item=>{
+
+        item.addEventListener(
+
+            "change",
+
+            ()=>{
+
+                selectedWallets =
+
+                [...checkbox]
+
+                .filter(
+
+                    c=>c.checked
+
+                )
+
+                .map(
+
+                    c=>c.value
+
+                );
+
+                updateActivities();
+
+            }
+
+        );
+
+    });
+
+}
+
+/* ===========================
+   POPULATE ASSET FILTER
+=========================== */
+
+function populateWalletAssetFilter(){
+
+    const container =
+
+    $("walletAssetFilter");
+
+    if(!container) return;
+
+    container.innerHTML="";
+
+    Object.keys(
+
+        Portfolio.wallets
+
+    )
+
+    .forEach(wallet=>{
+
+        const button =
+
+        document.createElement(
+
+            "button"
+
+        );
+
+        button.textContent=
+
+        wallet;
+
+        button.onclick=()=>{
+
+            selectedAssetWallet=
+
+            wallet;
+
+            updateWalletAssets();
+
+        };
+
+        container.appendChild(
+
+            button
+
+        );
+
+    });
+
+}
+
+/* ===========================
+   UPDATE WALLET ASSETS
+=========================== */
+
+function updateWalletAssets(){
+
+    const tbody =
+
+    $("walletAssetTable");
+
+    if(!tbody) return;
+
+    tbody.innerHTML="";
+
+    if(
+
+        !selectedAssetWallet
+
+    ) return;
+
+    const balance =
+
+    Portfolio.wallets
+
+    [
+
+        selectedAssetWallet
+
+    ];
+
+    Object.entries(balance)
+
+    .forEach(
+
+        ([asset,amount])=>{
+
+            if(amount===0)
+
+            return;
+
+            const row=
+
+            document.createElement(
+
+                "tr"
+
+            );
+
+            let usd = 0;
+
+            switch(asset){
+
+                case "BTC":
+
+                usd=
+
+                amount*
+
+                Portfolio.prices
+
+                .bitcoin.usd;
+
+                break;
+
+                case "ETH":
+
+                usd=
+
+                amount*
+
+                Portfolio.prices
+
+                .ethereum.usd;
+
+                break;
+
+                case "BNB":
+
+                usd=
+
+                amount*
+
+                Portfolio.prices
+
+                .binancecoin.usd;
+
+                break;
+
+                case "SOL":
+
+                usd=
+
+                amount*
+
+                Portfolio.prices
+
+                .solana.usd;
+
+                break;
+
+                default:
+
+                usd=
+
+                amount;
+
+            }
+
+            row.innerHTML=
+
+            `
+
+            <td>
+
+            ${asset}
+
+            </td>
+
+            <td>
+
+            ${amount}
+
+            </td>
+
+            <td>
+
+            ${formatUSD(usd)}
+
+            </td>
+
+            `;
+
+            tbody.appendChild(
+
+                row
+
+            );
+
+        }
+
+    );
+
+}
+
+
+/* ===========================
    UPDATE WALLET
 =========================== */
 
@@ -248,5 +555,29 @@ function updateWallet(){
     calculateWallets();
 
     updateWalletSummary();
+
+    populateWalletFilter();
+
+    initWalletFilter();
+
+    populateWalletAssetFilter();
+
+    if(
+
+        !selectedAssetWallet
+
+    ){
+
+        selectedAssetWallet =
+
+        Object.keys(
+
+            Portfolio.wallets
+
+        )[0];
+
+    }
+
+    updateWalletAssets();
 
 }
