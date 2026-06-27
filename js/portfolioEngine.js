@@ -136,3 +136,22 @@ function calculatePortfolioValue(
     return total;
 
 }
+/* ===========================
+   GET PORTFOLIO VALUE
+=========================== */
+
+function getPortfolioValue(data){
+
+    const balances =
+
+    calculateBalances(data);
+
+    return calculatePortfolioValue(
+
+        balances,
+
+        prices
+
+    );
+
+}
