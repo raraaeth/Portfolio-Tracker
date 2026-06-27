@@ -18,32 +18,50 @@ let airdropLimit = 5;
 
 async function getPrices(){
 
-    const response =
-    await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana&vs_currencies=usd"
-    );
+    await loadPrices();
 
-    prices =
-    await response.json();
+    const prices =
 
-    document.getElementById("btcPrice")
-    .textContent =
-    "$" +
+    Portfolio.prices;
+
+    document.getElementById(
+
+        "btcPrice"
+
+    ).textContent=
+
+    "$"+
+
     prices.bitcoin.usd.toLocaleString();
 
-    document.getElementById("bnbPrice")
-    .textContent =
-    "$" +
+    document.getElementById(
+
+        "bnbPrice"
+
+    ).textContent=
+
+    "$"+
+
     prices.binancecoin.usd.toLocaleString();
 
-    document.getElementById("ethPrice")
-    .textContent =
-    "$" +
+    document.getElementById(
+
+        "ethPrice"
+
+    ).textContent=
+
+    "$"+
+
     prices.ethereum.usd.toLocaleString();
 
-    document.getElementById("solPrice")
-    .textContent =
-    "$" +
+    document.getElementById(
+
+        "solPrice"
+
+    ).textContent=
+
+    "$"+
+
     prices.solana.usd.toLocaleString();
 
 }
