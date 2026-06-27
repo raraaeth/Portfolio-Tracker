@@ -1,23 +1,4 @@
 /* =========================
-   CONFIG
-========================= */
-/* =========================
-   GLOBAL DATA
-========================= */
-
-let transaksi = [];
-let prices = {};
-let walletChart = null;
-let selectedWallets = [];
-let selectedAssetWallet = null;
-let airdropLimit = 5;
-
-/* =========================
-   COINGECKO
-========================= */
-
-async function getPrices(){
-/* =========================
    COINGECKO
 ========================= */
 
