@@ -63,6 +63,7 @@ function calculateAirdrops(){
 
             };
 
+
         }
 
         projects[project].amount +=
@@ -96,6 +97,11 @@ function calculateAirdrops(){
         b.amount-a.amount
 
     );
+
+   debug(
+    "AIRDROP",
+    Portfolio.airdrops
+);
 
 }
 
