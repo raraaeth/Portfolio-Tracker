@@ -82,3 +82,27 @@ async function fetchPrices(){
     }
 
 }
+
+/* ===========================
+   TEST API
+=========================== */
+
+async function testAPI(){
+
+    await fetchTransactions();
+
+    await fetchPrices();
+
+    console.log(
+
+        "RAW :", Portfolio.raw
+
+    );
+
+    console.log(
+
+        "PRICES :", Portfolio.prices
+
+    );
+
+}
