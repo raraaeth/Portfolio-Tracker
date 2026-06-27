@@ -80,51 +80,80 @@ const API_URL =
 ========================= */
 
 function calculatePortfolio(){
-function calculatePortfolio(){
 
-    const balances =
+    let balances = {
 
-    calculateBalances(
+        BTC:0,
+        ETH:0,
+        BNB:0,
+        SOL:0,
+        USDT:0,
+        USDC:0
 
-        transaksi
+    };
 
-    );
+    transaksi.forEach(item => {
 
-    const totalPortfolio =
+        const asset =
+        item.Asset.toUpperCase();
 
-    calculatePortfolioValue(
+        const amount =
+        parseFloat(item.Amount) || 0;
 
-        balances,
+        if(
+            !balances.hasOwnProperty(asset)
+        ){
+            return;
+        }
 
-        prices
+        if(item.Jenis === "Masuk"){
 
-    );
-   calculateReserve(
-
-    balances
-
-);
-
-    document.getElementById(
-
-        "portfolioValue"
-
-    ).textContent =
-
-    "$" +
-
-    totalPortfolio.toLocaleString(
-
-        undefined,
-
-        {
-
-            minimumFractionDigits:2,
-
-            maximumFractionDigits:2
+            balances[asset] += amount;
 
         }
 
+        if(item.Jenis === "Keluar"){
+
+            balances[asset] -= amount;
+
+        }
+
+    });
+
+    let totalPortfolio = 0;
+
+    totalPortfolio +=
+    balances.BTC *
+    prices.bitcoin.usd;
+
+    totalPortfolio +=
+    balances.ETH *
+    prices.ethereum.usd;
+
+    totalPortfolio +=
+    balances.BNB *
+    prices.binancecoin.usd;
+
+    totalPortfolio +=
+    balances.SOL *
+    prices.solana.usd;
+
+    totalPortfolio +=
+    balances.USDT;
+
+    totalPortfolio +=
+    balances.USDC;
+
+    document.getElementById(
+        "portfolioValue"
+    ).textContent =
+    "$" +
+    totalPortfolio.toLocaleString(
+        undefined,
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
     );
 
 }
@@ -1435,7 +1464,6 @@ async function init(){
     await testData();
 
     await getPrices();
-   PortfolioEngine.prices = prices;
 
     calculatePortfolio();
     calculateAirdrop();
